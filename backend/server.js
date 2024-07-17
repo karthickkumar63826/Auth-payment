@@ -5,6 +5,7 @@ const mongoDbConnection = require("./utils/database");
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const errorHandler = require("./middleware/errorHandler");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 app.use(express.json());
@@ -29,3 +30,4 @@ start();
 
 app.use("/api/user", userRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/product", paymentRoutes);

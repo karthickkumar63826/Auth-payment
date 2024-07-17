@@ -3,6 +3,12 @@ import axios from "axios";
 import { userContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import CheckoutForm from "./CheckoutForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  "pk_test_51NTHcaSFMQKvNeSDaJtpZRkj5G6kTGSgEOJHcgiL6SVgqG39nY0u5rsDffPmP7QmYxcHR1bcAwBg4nILgjZDYgfz00CYcQTLCp"
+);
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
@@ -63,7 +69,12 @@ const CartPage = () => {
   };
 
   const handleCheckout = () => {
-    navigate("/checkout");
+    navigate("/checkout", { state: { cartItems: cart } });
+  };
+
+  const handlePaymentSuccess = (paymentIntent) => {
+    console.log("Payment successful:", paymentIntent);
+    navigate("/success");
   };
 
   return (
@@ -107,12 +118,19 @@ const CartPage = () => {
         </p>
         <button
           className="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600"
-          onClick={() => handleCheckout()}
+          onClick={handleCheckout}
         >
           Checkout
         </button>
       </div>
-      {<CheckoutForm cartItems={cart} onPaymentSuccess={handlePaymentSuccess} />}
+      {
+        <Elements stripe={stripePromise}>
+          <CheckoutForm
+            cartItems={cart}
+            onPaymentSuccess={handlePaymentSuccess}
+          />
+        </Elements>
+      }
     </div>
   );
 };

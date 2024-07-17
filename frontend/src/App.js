@@ -22,6 +22,7 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="/cart" element={<CartPage />} />
+
         <Route path="/checkout" element={<CheckoutForm />} />
       </Routes>
     </div>

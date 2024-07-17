@@ -2,7 +2,7 @@ const Stripe = require("stripe");
 const CustomError = require("../middleware/customError");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-const stripePayment = async (req, res) => {
+const makePayment = async (req, res) => {
   const { items } = req.body;
 
   try {
@@ -12,7 +12,7 @@ const stripePayment = async (req, res) => {
         price_data: {
           currency: "usd",
           product_data: {
-            name: item.name,
+            name: item.title,
           },
           unit_amount: item.price * 100,
         },
@@ -29,4 +29,4 @@ const stripePayment = async (req, res) => {
   }
 };
 
-module.exports = stripePayment;
+module.exports = makePayment;
