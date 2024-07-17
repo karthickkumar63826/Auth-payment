@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { userContext } from "../context/userContext";
+import { useNavigate } from "react-router-dom";
+import CheckoutForm from "./CheckoutForm";
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState(0); // Default to 0
+  const [total, setTotal] = useState(0);
 
   const { setCartLength } = useContext(userContext);
-
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -54,10 +56,14 @@ const CartPage = () => {
       const totalPrice = data.total;
       setCart(items);
       setTotal(totalPrice);
-      setCartLength(items.length); // Update cart length
+      setCartLength(items.length);
     } catch (error) {
       console.log("Error while removing an item", error.message);
     }
+  };
+
+  const handleCheckout = () => {
+    navigate("/checkout");
   };
 
   return (
@@ -99,10 +105,14 @@ const CartPage = () => {
         <p className="text-xl font-semibold mb-4">
           Total: {total ? ` $${total}` : " $0"}
         </p>
-        <button className="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600">
+        <button
+          className="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600"
+          onClick={() => handleCheckout()}
+        >
           Checkout
         </button>
       </div>
+      {<CheckoutForm cartItems={cart} onPaymentSuccess={handlePaymentSuccess} />}
     </div>
   );
 };
