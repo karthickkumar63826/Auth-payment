@@ -2,13 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { userContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
-import CheckoutForm from "./CheckoutForm";
-import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe(
-  "pk_test_51NTHcaSFMQKvNeSDaJtpZRkj5G6kTGSgEOJHcgiL6SVgqG39nY0u5rsDffPmP7QmYxcHR1bcAwBg4nILgjZDYgfz00CYcQTLCp"
-);
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
@@ -32,6 +26,7 @@ const CartPage = () => {
         const data = response.data;
         const items = data.items;
         const priceTotal = data.total;
+        console.log(items);
         setCart(items);
         setTotal(priceTotal);
         setCartLength(items.length);
@@ -68,13 +63,37 @@ const CartPage = () => {
     }
   };
 
-  const handleCheckout = () => {
-    navigate("/checkout", { state: { cartItems: cart } });
-  };
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51NTHcaSFMQKvNeSDaJtpZRkj5G6kTGSgEOJHcgiL6SVgqG39nY0u5rsDffPmP7QmYxcHR1bcAwBg4nILgjZDYgfz00CYcQTLCp"
+    );
 
-  const handlePaymentSuccess = (paymentIntent) => {
-    console.log("Payment successful:", paymentIntent);
-    navigate("/success");
+    const body = {
+      products: cart,
+    };
+
+    const headers = {
+      "content-Type": "application/json",
+    };
+
+    const response = await fetch(
+      "https://auth-payment.onrender.com/create-checkout-session",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
+    }
   };
 
   return (
@@ -82,7 +101,7 @@ const CartPage = () => {
       <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
       <div className="px-20">
         <div className="bg-white rounded shadow-md">
-          {cart.legnth > 0 &&
+          {cart &&
             cart.map((product) => (
               <div
                 className="flex items-center border-b border-gray-200 py-4"
@@ -119,12 +138,11 @@ const CartPage = () => {
         </p>
         <button
           className="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600"
-          onClick={handleCheckout}
+          onClick={makePayment}
         >
           Checkout
         </button>
       </div>
-     
     </div>
   );
 };

@@ -8,6 +8,8 @@ import { Routes, Route } from "react-router-dom";
 import ProductShowcase from "./Pages/ProductShowCase";
 import LogoutPage from "./Pages/LogoutPage";
 import CartPage from "./Pages/CartPage";
+import PaymentSuccess from "./Pages/PaymentSuccess";
+import PaymentCancel from "./Pages/PaymentCancel";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/success" element={<PaymentSuccess />} />
+        <Route path="/cancel" element={<PaymentCancel />} />
       </Routes>
     </div>
   );
