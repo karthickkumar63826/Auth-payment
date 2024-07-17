@@ -80,7 +80,7 @@ const CartPage = () => {
         {
           method: "POST",
           headers: headers,
-          body: JSON.stringify(body),
+          body: body,
         }
       );
 
