@@ -77,7 +77,7 @@ const CartPage = () => {
     };
 
     const response = await fetch(
-      "https://auth-payment.onrender.com/create-checkout-session",
+      "https://auth-payment.onrender.com/api/product/create-checkout-session",
       {
         method: "POST",
         headers: headers,

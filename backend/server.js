@@ -9,7 +9,11 @@ const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(errorHandler);
 
 const port = process.env.PORT || 8001;
