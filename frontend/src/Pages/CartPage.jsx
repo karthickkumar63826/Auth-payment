@@ -1,36 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { userContext } from "../context/userContext";
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState();
+  const [total, setTotal] = useState(0); // Default to 0
+
+  const { setCartLength } = useContext(userContext);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get(`https://auth-payment.onrender.com/api/cart`, {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
-        const data = await response.data;
-        const items = await data.items;
-        const priceTotal = await data.total;
+        const response = await axios.get(
+          `https://auth-payment.onrender.com/api/cart`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        const data = response.data;
+        const items = data.items;
+        const priceTotal = data.total;
         setCart(items);
         setTotal(priceTotal);
-        console.log(items);
+        setCartLength(items.length);
       } catch (error) {
-        console.log("Error in fetching cart item", error.message);
+        console.log("Error in fetching cart items", error.message);
       }
     };
 
     fetchCartItems();
-  }, []);
+  }, [setCartLength, user.token]);
 
   const handleRemove = async (productId) => {
-    console.log(productId);
     try {
       const response = await axios.delete(
         "https://auth-payment.onrender.com/api/cart/remove",
@@ -44,18 +49,19 @@ const CartPage = () => {
         }
       );
 
-      const data = await response.data;
-      const items = await data.items;
-      const totalPrice = await data.total;
+      const data = response.data;
+      const items = data.items;
+      const totalPrice = data.total;
       setCart(items);
       setTotal(totalPrice);
+      setCartLength(items.length); // Update cart length
     } catch (error) {
       console.log("Error while removing an item", error.message);
     }
   };
 
   return (
-    <div className="container mx-auto py-12 ">
+    <div className="container mx-auto py-12">
       <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
       <div className="px-20">
         <div className="bg-white rounded shadow-md">
@@ -91,7 +97,7 @@ const CartPage = () => {
       </div>
       <div className="p-8">
         <p className="text-xl font-semibold mb-4">
-          Total:{total ? ` $${total}` : " $0"}
+          Total: {total ? ` $${total}` : " $0"}
         </p>
         <button className="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600">
           Checkout

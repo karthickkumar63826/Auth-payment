@@ -6,13 +6,17 @@ const UserProvider = ({ children }) => {
   const [currentUser, setCurrentuser] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
+  const [cartLength, setCartLength] = useState(0);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
-  }, [currentUser]);
+    setCartLength(currentUser ? cartLength : 0);
+  }, [setCartLength, currentUser]);
 
   return (
-    <userContext.Provider value={{ currentUser, setCurrentuser }}>
+    <userContext.Provider
+      value={{ currentUser, setCurrentuser, cartLength, setCartLength }}
+    >
       {children}
     </userContext.Provider>
   );

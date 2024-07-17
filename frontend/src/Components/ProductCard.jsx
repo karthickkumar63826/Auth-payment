@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { userContext } from "../context/userContext";
 
 function ProductCard({ product }) {
   const navigate = useNavigate();
+  const { setCartLength } = useContext(userContext);
 
-  const handleAddToCart = async ({ product }) => {
+  const handleAddToCart = async (product) => {
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user) {
@@ -28,9 +30,12 @@ function ProductCard({ product }) {
           }
         );
 
-        console.log("Product add to the cart", response.data);
+        const data = response.data;
+        setCartLength((prevLength) => prevLength + 1); 
+
+        console.log("Product added to the cart", data);
       } catch (error) {
-        console.log(`Error in adding a product on cart ${error.message}`);
+        console.log(`Error in adding a product to the cart: ${error.message}`);
       }
     }
   };
@@ -51,7 +56,7 @@ function ProductCard({ product }) {
       <div className="px-6 pt-4 pb-2">
         <button
           className="bg-indigo-500 text-white font-bold py-2 px-4 rounded hover:bg-indigo-600"
-          onClick={() => handleAddToCart({ product })}
+          onClick={() => handleAddToCart(product)}
         >
           Add to Cart
         </button>

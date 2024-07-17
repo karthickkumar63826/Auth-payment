@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { userContext } from "../context/userContext";
 import { useContext } from "react";
+import { userContext } from "../context/userContext";
 import { FaShoppingCart } from "react-icons/fa";
 
 function Navbar() {
-  const { currentUser } = useContext(userContext);
-  const [cartLength, setCartLength] = useState(0);
+  const { currentUser, cartLength, setCartLength } = useContext(userContext);
+
+  useEffect(() => {
+    setCartLength(currentUser ? cartLength : 0);
+  }, []);
 
   return (
     <nav className="bg-white shadow-md sticky top-0">
