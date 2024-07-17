@@ -82,34 +82,35 @@ const CartPage = () => {
       <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
       <div className="px-20">
         <div className="bg-white rounded shadow-md">
-          {cart.map((product) => (
-            <div
-              className="flex items-center border-b border-gray-200 py-4"
-              key={product.productId}
-            >
-              <div className="flex-shrink-0 w-20">
-                <img
-                  src={product.image}
-                  alt="Product"
-                  className="w-full h-auto"
-                />
+          {cart.legnth > 0 &&
+            cart.map((product) => (
+              <div
+                className="flex items-center border-b border-gray-200 py-4"
+                key={product.productId}
+              >
+                <div className="flex-shrink-0 w-20">
+                  <img
+                    src={product.image}
+                    alt="Product"
+                    className="w-full h-auto"
+                  />
+                </div>
+                <div className="flex-grow ml-4">
+                  <p className="text-lg font-semibold">{product.title}</p>
+                  <p className="text-gray-700">
+                    $ {product.price} x {product.quantity}
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <button
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => handleRemove(product.productId)}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
-              <div className="flex-grow ml-4">
-                <p className="text-lg font-semibold">{product.title}</p>
-                <p className="text-gray-700">
-                  $ {product.price} x {product.quantity}
-                </p>
-              </div>
-              <div className="flex-shrink-0">
-                <button
-                  className="text-red-500 hover:text-red-700"
-                  onClick={() => handleRemove(product.productId)}
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
       <div className="p-8">
@@ -123,14 +124,7 @@ const CartPage = () => {
           Checkout
         </button>
       </div>
-      {
-        <Elements stripe={stripePromise}>
-          <CheckoutForm
-            cartItems={cart}
-            onPaymentSuccess={handlePaymentSuccess}
-          />
-        </Elements>
-      }
+     
     </div>
   );
 };
