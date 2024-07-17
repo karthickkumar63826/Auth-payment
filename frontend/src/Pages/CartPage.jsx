@@ -62,36 +62,43 @@ const CartPage = () => {
   };
 
   const makePayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51NTHcaSFMQKvNeSDaJtpZRkj5G6kTGSgEOJHcgiL6SVgqG39nY0u5rsDffPmP7QmYxcHR1bcAwBg4nILgjZDYgfz00CYcQTLCp"
-    );
+    try {
+      const stripe = await loadStripe(
+        "pk_test_51NTHcaSFMQKvNeSDaJtpZRkj5G6kTGSgEOJHcgiL6SVgqG39nY0u5rsDffPmP7QmYxcHR1bcAwBg4nILgjZDYgfz00CYcQTLCp"
+      );
 
-    const body = {
-      products: cart,
-    };
+      const body = {
+        products: cart,
+      };
 
-    const headers = {
-      "Content-Type": "application/json",
-    };
+      const headers = {
+        "Content-Type": "application/json",
+      };
 
-    const response = await fetch(
-      "https://auth-payment.onrender.com/api/product/create-checkout-session",
-      {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body),
-        mode: "no-cors",
+      const response = await fetch(
+        "https://auth-payment.onrender.com/api/product/create-checkout-session",
+        {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(body),
+        }
+      );
+
+      if (!response.data.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    );
 
-    const session = await response.json();
+      const session = await response.json();
 
-    const result = stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
 
-    if (result.error) {
-      console.log(result.error);
+      if (result.error) {
+        console.error(result.error);
+      }
+    } catch (error) {
+      console.error("Error making payment:", error);
     }
   };
 
