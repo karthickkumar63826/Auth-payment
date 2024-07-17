@@ -10,7 +10,7 @@ const CartPage = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/cart`, {
+        const response = await axios.get(`https://auth-payment.onrender.com/api/cart`, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -33,7 +33,7 @@ const CartPage = () => {
     console.log(productId);
     try {
       const response = await axios.delete(
-        "http://localhost:8000/api/cart/remove",
+        "https://auth-payment.onrender.com/api/cart/remove",
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

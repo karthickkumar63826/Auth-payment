@@ -13,7 +13,7 @@ function ProductCard({ product }) {
     } else {
       try {
         const response = await axios.post(
-          `http://localhost:8000/api/cart/add`,
+          `https://auth-payment.onrender.com/api/cart/add`,
           {
             productId: product.id,
             title: product.title,

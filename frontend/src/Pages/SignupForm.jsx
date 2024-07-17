@@ -17,7 +17,7 @@ function SignupForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/user/signup`,
+        `https://auth-payment.onrender.com/api/user/signup`,
         userData
       );
       console.log(response.data);
