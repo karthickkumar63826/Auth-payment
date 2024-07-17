@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { userContext } from "../context/userContext";
-import { useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 const CartPage = () => {
@@ -9,7 +8,6 @@ const CartPage = () => {
   const [total, setTotal] = useState(0);
 
   const { setCartLength } = useContext(userContext);
-  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -73,7 +71,7 @@ const CartPage = () => {
     };
 
     const headers = {
-      "content-Type": "application/json",
+      "Content-Type": "application/json",
     };
 
     const response = await fetch(
@@ -82,6 +80,7 @@ const CartPage = () => {
         method: "POST",
         headers: headers,
         body: JSON.stringify(body),
+        mode: "no-cors",
       }
     );
 

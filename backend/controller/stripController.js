@@ -1,5 +1,4 @@
 const Stripe = require("stripe");
-const CustomError = require("../middleware/customError");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const makePayment = async (req, res) => {
@@ -17,7 +16,7 @@ const makePayment = async (req, res) => {
     quantity: product.quantity,
   }));
 
-  const session = await stripe.checkout.session.create({
+  const session = await stripe.checkout.sessions.create({
     payment_method_type: ["card"],
     line_items: lineItems,
     mode: "payment",
