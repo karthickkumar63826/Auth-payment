@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const CustomError = require("../middleware/customError");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res, next) => {
