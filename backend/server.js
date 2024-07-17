@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const bodyParse = require("body-parser");
 const mongoDbConnection = require("./utils/database");
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
@@ -9,6 +10,7 @@ const paymentRoutes = require("./routes/paymentRoutes");
 
 const app = express();
 app.use(express.json());
+app.use(bodyParse.json());
 app.use(
   cors({
     origin: [
