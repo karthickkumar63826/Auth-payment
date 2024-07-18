@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useContext } from 'react';
-import { userContext } from '../context/userContext';
-import OrderItem from './OrderItem'; 
+import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import { userContext } from "../context/userContext";
+import OrderItem from "./OrderItem";
 
 const MyOrder = () => {
   const { currentUser } = useContext(userContext);
@@ -10,21 +10,23 @@ const MyOrder = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('/api/orders', {
-          headers: {
-            Authorization: `Bearer ${currentUser.token}`,
-          },
-        });
+        const response = await fetch(
+          "https://auth-payment.onrender.com/api/orders",
+          {
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+            },
+          }
+        );
 
         if (!response.ok) {
-          throw new Error('Failed to fetch orders');
+          throw new Error("Failed to fetch orders");
         }
 
         const data = await response.json();
-        setOrders(data); 
+        setOrders(data);
       } catch (error) {
-        console.error('Error fetching orders:', error);
-        
+        console.error("Error fetching orders:", error);
       }
     };
 
