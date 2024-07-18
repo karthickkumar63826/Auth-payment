@@ -6,9 +6,8 @@ const getAllOrder = async (req, res, next) => {
   try {
     const orders = await Orders.find({ user: userId }).populate(
       "user",
-      "username, email"
+      "username email"
     );
-
     res.json(orders);
   } catch (error) {
     console.log(error.message);
