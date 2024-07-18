@@ -8,8 +8,9 @@ import { Routes, Route } from "react-router-dom";
 import ProductShowcase from "./Pages/ProductShowCase";
 import LogoutPage from "./Pages/LogoutPage";
 import CartPage from "./Pages/CartPage";
-import PaymentSuccess from "./Pages/PaymentSuccess";
-import PaymentCancel from "./Pages/PaymentCancel";
+import OrderPage from "./Pages/OrderPage";
+import CancelPage from "./Pages/CancelPage";
+import MyOrder from "./Pages/MyOrder";
 
 function App() {
   return (
@@ -23,8 +24,9 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/logout" element={<LogoutPage />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/success" element={<PaymentSuccess />} />
-        <Route path="/cancel" element={<PaymentCancel />} />
+        <Route path="/success/:sessionId" element={<OrderPage />} />
+        <Route path="/cancel/:sessionId" element={<CancelPage />} />
+        <Route path="/myorders" element={<MyOrder />} />
       </Routes>
     </div>
   );

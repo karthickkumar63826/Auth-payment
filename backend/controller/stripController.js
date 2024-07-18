@@ -1,5 +1,6 @@
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const Order = require("../models/orderModel");
 
 const makePayment = async (req, res) => {
   const { products } = req.body;
@@ -20,10 +21,20 @@ const makePayment = async (req, res) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: "https://rainbow-hummingbird-18899b.netlify.app",
-    cancel_url: "https://rainbow-hummingbird-18899b.netlify.app/cancel",
+    success_url:
+      "https://rainbow-hummingbird-18899b.netlify.app/success/{CHECKOUT_SESSION_ID}",
+    cancel_url:
+      "https://rainbow-hummingbird-18899b.netlify.app/cancel/{CHECKOUT_SESSION_ID}",
   });
 
+  const order = await Order.create({
+    user: req.user._id,
+    products: products,
+    paymentId: session.id,
+    status: "pending",
+  });
+
+  await order.save();
   res.json({ id: session.id });
 };
 

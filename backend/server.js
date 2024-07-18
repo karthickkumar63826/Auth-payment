@@ -3,10 +3,12 @@ const cors = require("cors");
 require("dotenv").config();
 const bodyParse = require("body-parser");
 const mongoDbConnection = require("./utils/database");
+const errorHandler = require("./middleware/errorHandler");
+
 const userRoutes = require("./routes/userRoutes");
 const cartRoutes = require("./routes/cartRoutes");
-const errorHandler = require("./middleware/errorHandler");
 const paymentRoutes = require("./routes/paymentRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 const app = express();
 app.use(express.json());
@@ -43,3 +45,4 @@ start();
 app.use("/api/user", userRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/product", paymentRoutes);
+app.use("api/orders", orderRoutes);

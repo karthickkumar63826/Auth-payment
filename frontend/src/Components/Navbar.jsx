@@ -33,11 +33,26 @@ function Navbar() {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {currentUser ? (
-              <Link to={"/logout"}>
-                <div className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
-                  Logout
+              <>
+                <Link to={"/myorders"}>
+                  <div className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                    My Orders
+                  </div>
+                </Link>
+                <div className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium relative">
+                  <Link to={currentUser ? "/cart" : "/login"}>
+                    <FaShoppingCart size={30} />
+                    <div className="absolute top-0 right-1 text-black">
+                      {cartLength}
+                    </div>
+                  </Link>
                 </div>
-              </Link>
+                <Link to={"/logout"}>
+                  <div className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+                    Logout
+                  </div>
+                </Link>
+              </>
             ) : (
               <Link to={"/login"}>
                 <div className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
@@ -45,14 +60,6 @@ function Navbar() {
                 </div>
               </Link>
             )}
-            <div className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium relative">
-              <Link to={currentUser ? "/cart" : "/login"}>
-                <FaShoppingCart size={30} />
-                <div className="absolute top-0 right-1 text-black">
-                  {cartLength}
-                </div>
-              </Link>
-            </div>
           </div>
         </div>
       </div>
