@@ -20,7 +20,7 @@ const makePayment = async (req, res) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: "https://rainbow-hummingbird-18899b.netlify.app/success",
+    success_url: "https://rainbow-hummingbird-18899b.netlify.app",
     cancel_url: "https://rainbow-hummingbird-18899b.netlify.app/cancel",
   });
 
