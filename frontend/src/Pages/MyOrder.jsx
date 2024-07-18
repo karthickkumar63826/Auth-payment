@@ -1,5 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import { userContext } from "../context/userContext";
+import React, { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { userContext } from '../context/userContext';
+import OrderItem from './OrderItem'; 
 
 const MyOrder = () => {
   const { currentUser } = useContext(userContext);
@@ -8,69 +10,39 @@ const MyOrder = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch(
-          "https://auth-payment.onrender.com/api/orders",
-          {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`,
-            },
-          }
-        );
+        const response = await fetch('/api/orders', {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+
         const data = await response.json();
-        setOrders(data);
+        setOrders(data); 
       } catch (error) {
-        console.error("Error fetching orders:", error);
+        console.error('Error fetching orders:', error);
+        
       }
     };
 
-    if (currentUser) {
-      fetchOrders();
-    }
-  }, [currentUser]);
+    fetchOrders();
+  }, [currentUser.token]);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100 sm:flex-col">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
-        <h2 className="text-2xl font-bold mb-4">Your Orders</h2>
-        <table className="min-w-full bg-white">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b">Order ID</th>
-              <th className="py-2 px-4 border-b">Items</th>
-              <th className="py-2 px-4 border-b">Total Amount</th>
-              <th className="py-2 px-4 border-b">Status</th>
-              <th className="py-2 px-4 border-b">Order Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td className="py-2 px-4 border-b">{order._id}</td>
-                <td className="py-2 px-4 border-b">
-                  {order.products.map((item) => (
-                    <div key={item.productId}>
-                      {item.title} - {item.quantity} x ${item.price.toFixed(2)}
-                    </div>
-                  ))}
-                </td>
-                <td className="py-2 px-4 border-b">
-                  $
-                  {order.products
-                    .reduce(
-                      (total, item) => total + item.price * item.quantity,
-                      0
-                    )
-                    .toFixed(2)}
-                </td>
-                <td className="py-2 px-4 border-b">{order.status}</td>
-                <td className="py-2 px-4 border-b">
-                  {new Date(order.createdAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">My Orders</h1>
+      {orders.length === 0 ? (
+        <p>No orders found.</p>
+      ) : (
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {orders.map((order) => (
+            <OrderItem key={order._id} order={order} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
