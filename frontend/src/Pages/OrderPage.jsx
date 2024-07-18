@@ -40,8 +40,23 @@ const OrderPage = () => {
           console.error("Error updating order status:", error);
           setLoading(false);
         });
+      removeItemsFromCart();
     }
   }, [sessionId, currentUser]);
+
+  const removeItemsFromCart = async () => {
+    try {
+      await fetch("https://auth-payment.onrender.com/api/cart/removeAll", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   if (loading) {
     return (
@@ -57,7 +72,7 @@ const OrderPage = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-4">Order Status</h2>
+        <h2 className="text-2xl font-bold mb-4">Order Status :</h2>
         <p className="text-green-500">Your payment was successful!</p>
         <p className="text-gray-700">Order ID: {sessionId}</p>
         <p className="mt-4">

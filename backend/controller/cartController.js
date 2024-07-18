@@ -127,4 +127,30 @@ const updateQuantity = async (req, res, next) => {
   }
 };
 
-module.exports = { getProducts, addProduct, removeProduct, updateQuantity };
+const removeAllProduct = async (req, res, next) => {
+  const userId = req.user._id;
+
+  try {
+    let cart = await Cart.findOne({ user: userId });
+
+    if (!cart) {
+      return next(new CustomError("Cart not found"));
+    }
+
+    cart.items = [];
+    cart.total = 0;
+    await cart.save();
+    res.status(200).send("Cart removed successfully");
+  } catch (error) {
+    console.error(error.message);
+    return next(new CustomError(error.message, 422));
+  }
+};
+
+module.exports = {
+  getProducts,
+  addProduct,
+  removeProduct,
+  updateQuantity,
+  removeAllProduct,
+};
