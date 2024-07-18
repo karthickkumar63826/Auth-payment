@@ -31,7 +31,7 @@ const makePayment = async (req, res) => {
     user: req.user._id,
     products: products,
     paymentId: session.id,
-    status: "successfull",
+    status: "pending",
   });
 
   await order.save();
