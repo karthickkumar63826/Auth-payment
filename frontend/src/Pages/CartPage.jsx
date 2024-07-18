@@ -143,7 +143,7 @@ const CartPage = () => {
           )}
         </div>
       </div>
-      {cart && (
+      {cart.length > 0 && (
         <div className="p-8">
           <p className="text-xl font-semibold mb-4">
             Total: {total ? ` $${total}` : " $0"}

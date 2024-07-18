@@ -20,7 +20,7 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center flex-end sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0">
+            <div className="flex justify-center items-center">
               <Link to={"/"}>
                 <img
                   src="https://banner2.cleanpng.com/lnd/20240711/txp/a8cg0jvqw.webp"
@@ -52,27 +52,30 @@ function Navbar() {
             </h1>
             {currentUser ? (
               <>
-                <Link
-                  to={"/myorders"}
-                  className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  My Orders
-                </Link>
-                <Link
-                  to={"/cart"}
-                  className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium relative"
-                >
-                  <FaShoppingCart size={30} />
-                  <div className="absolute top-0 right-1 text-black">
-                    {cartLength}
-                  </div>
-                </Link>
-                <Link
-                  to={"/logout"}
-                  className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Logout
-                </Link>
+                <div className="flex gap-4">
+                  <Link
+                    to={"/myorders"}
+                    className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    My Orders
+                  </Link>
+
+                  <Link
+                    to={"/logout"}
+                    className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Logout
+                  </Link>
+                  <Link
+                    to={"/cart"}
+                    className="text-gray-900 px-3 py-2 rounded-md text-sm font-medium relative"
+                  >
+                    <FaShoppingCart size={30} />
+                    <div className="absolute top-0 right-1 text-black">
+                      {cartLength}
+                    </div>
+                  </Link>
+                </div>
               </>
             ) : (
               <Link
