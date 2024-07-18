@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://snazzy-dasik-4a1e0f.netlify.app",
+      "https://rainbow-hummingbird-18899b.netlify.app",
     ],
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type", "Authorization"],
