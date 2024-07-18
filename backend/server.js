@@ -42,4 +42,4 @@ start();
 app.use("/api/user", userRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/product", paymentRoutes);
-app.use("api/orders", orderRoutes);
+app.use("/api/orders", orderRoutes);
