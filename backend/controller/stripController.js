@@ -20,8 +20,8 @@ const makePayment = async (req, res) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: "http://localhost:3000/success",
-    cancel_url: "http://localhost:3000/cancel",
+    success_url: "https://snazzy-dasik-4a1e0f.netlify.app/success",
+    cancel_url: "https://snazzy-dasik-4a1e0f.netlify.app/cancel",
   });
 
   res.json({ id: session.id });
