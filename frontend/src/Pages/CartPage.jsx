@@ -84,7 +84,7 @@ const CartPage = () => {
         }
       );
 
-      if (!response.data.ok) {
+      if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
