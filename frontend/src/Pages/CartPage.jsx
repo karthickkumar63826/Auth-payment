@@ -73,7 +73,7 @@ const CartPage = () => {
 
       const headers = {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${user.token}`,
+        Authorization: `Bearer ${user.token}`,
       };
 
       const response = await fetch(
@@ -82,6 +82,7 @@ const CartPage = () => {
           method: "POST",
           headers: headers,
           body: JSON.stringify(body),
+          credentials: "include",
         }
       );
 

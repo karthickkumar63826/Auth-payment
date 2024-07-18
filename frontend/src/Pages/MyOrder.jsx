@@ -29,7 +29,7 @@ const MyOrder = () => {
   }, [currentUser]);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center h-screen bg-gray-100 sm:flex-col">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
         <h2 className="text-2xl font-bold mb-4">Your Orders</h2>
         <table className="min-w-full bg-white">
