@@ -109,7 +109,7 @@ const CartPage = () => {
       <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
       <div className="px-20">
         <div className="bg-white rounded shadow-md">
-          {cart &&
+          {cart ? (
             cart.map((product) => (
               <div
                 className="flex items-center border-b border-gray-200 py-4"
@@ -137,20 +137,25 @@ const CartPage = () => {
                   </button>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <div>No items in cart</div>
+          )}
         </div>
       </div>
-      <div className="p-8">
-        <p className="text-xl font-semibold mb-4">
-          Total: {total ? ` $${total}` : " $0"}
-        </p>
-        <button
-          className="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600"
-          onClick={makePayment}
-        >
-          Checkout
-        </button>
-      </div>
+      {cart && (
+        <div className="p-8">
+          <p className="text-xl font-semibold mb-4">
+            Total: {total ? ` $${total}` : " $0"}
+          </p>
+          <button
+            className="bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600"
+            onClick={makePayment}
+          >
+            Checkout
+          </button>
+        </div>
+      )}
     </div>
   );
 };
