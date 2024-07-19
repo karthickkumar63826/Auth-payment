@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(bodyParse.json());
 app.use(
   cors({
-    origin: ["https://rainbow-hummingbird-18899b.netlify.app"],
+    origin: ["https://bytizeecommerce.netlify.app"],
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
