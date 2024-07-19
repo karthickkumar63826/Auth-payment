@@ -104,11 +104,7 @@ function Navbar() {
                 to={"/cart"}
                 className="text-gray-900 block px-3 py-2 rounded-md text-base font-medium relative"
               >
-                <FaShoppingCart size={20} />
                 <span className="ml-2">Cart</span>
-                <div className="absolute top-0 right-0 text-black">
-                  {cartLength}
-                </div>
               </Link>
               <Link
                 to={"/logout"}
