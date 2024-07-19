@@ -22,9 +22,9 @@ const makePayment = async (req, res) => {
     line_items: lineItems,
     mode: "payment",
     success_url:
-      "https://rainbow-hummingbird-18899b.netlify.app/success/{CHECKOUT_SESSION_ID}",
+      "https://bytizeecommerce.netlify.app/success/{CHECKOUT_SESSION_ID}",
     cancel_url:
-      "https://rainbow-hummingbird-18899b.netlify.app/cancel/{CHECKOUT_SESSION_ID}",
+      "https://bytizeecommerce.netlify.app/cancel/{CHECKOUT_SESSION_ID}",
   });
 
   const order = await Order.create({

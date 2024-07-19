@@ -104,7 +104,7 @@ function Navbar() {
                 to={"/cart"}
                 className="text-gray-900 block px-3 py-2 rounded-md text-base font-medium relative"
               >
-                <span className="ml-2">Cart</span>
+                <span className="">Cart</span>
               </Link>
               <Link
                 to={"/logout"}
