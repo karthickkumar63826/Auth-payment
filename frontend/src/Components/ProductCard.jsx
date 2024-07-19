@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../context/userContext";
+import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ function ProductCard({ product }) {
         );
 
         const data = response.data;
-        setCartLength((prevLength) => prevLength + 1); 
+        setCartLength((prevLength) => prevLength + 1);
 
         console.log("Product added to the cart", data);
       } catch (error) {
@@ -43,15 +44,17 @@ function ProductCard({ product }) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
       {product.images && product.images[0] && (
-        <img
-          className="w-full h-64 object-cover"
-          src={product.images[0]}
-          alt={product.title}
-        />
+        <Link to={`/product/${product.id}`}>
+          <img
+            className="w-full h-64 object-cover"
+            src={product.images[0]}
+            alt={product.title}
+          />
+        </Link>
       )}
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{product.title}</div>
-        <p className="text-gray-700 text-base">${product.price}</p>
+        <p className="text-gray-700 text-base">Price: ${product.price}</p>
       </div>
       <div className="px-6 pt-4 pb-2">
         <button

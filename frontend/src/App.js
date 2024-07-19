@@ -11,6 +11,7 @@ import CartPage from "./Pages/CartPage";
 import OrderPage from "./Pages/OrderPage";
 import CancelPage from "./Pages/CancelPage";
 import MyOrder from "./Pages/MyOrder";
+import ProductPage from "./Pages/ProductPage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/success/:sessionId" element={<OrderPage />} />
         <Route path="/cancel/:sessionId" element={<CancelPage />} />
         <Route path="/myorders" element={<MyOrder />} />
+        <Route path="/product/:productId" element={<ProductPage />} />
       </Routes>
     </div>
   );
